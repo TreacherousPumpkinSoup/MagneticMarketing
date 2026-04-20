@@ -71,6 +71,20 @@ export default function PersonalityHook({ canStart }: PersonalityHookProps) {
     let raf = 0;
     let lastTime = performance.now();
     let mounted = true;
+    let speedResetTimer: number | undefined;
+    let lastTouchY: number | null = null;
+
+    const bumpSpeed = (magnitude: number) => {
+      const intensity = Math.min(1.6, Math.max(0, magnitude / 540));
+      targetSpeedRef.current = 1 + intensity;
+      if (speedResetTimer) {
+        window.clearTimeout(speedResetTimer);
+      }
+      speedResetTimer = window.setTimeout(() => {
+        if (!mounted) return;
+        targetSpeedRef.current = 1;
+      }, 420);
+    };
 
     const animate = (time: number) => {
       if (!mounted) return;
@@ -86,20 +100,41 @@ export default function PersonalityHook({ canStart }: PersonalityHookProps) {
     raf = requestAnimationFrame(animate);
 
     const onWheel = (event: WheelEvent) => {
-      const intensity = Math.min(1.6, Math.max(0, Math.abs(event.deltaY) / 540));
-      targetSpeedRef.current = 1 + intensity;
-      window.setTimeout(() => {
-        if (!mounted) return;
-        targetSpeedRef.current = 1;
-      }, 420);
+      bumpSpeed(Math.abs(event.deltaY));
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (!event.touches.length) return;
+      lastTouchY = event.touches[0].clientY;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (!event.touches.length || lastTouchY === null) return;
+      const currentY = event.touches[0].clientY;
+      const delta = Math.abs(lastTouchY - currentY);
+      lastTouchY = currentY;
+      bumpSpeed(delta * 10);
+    };
+
+    const onTouchEnd = () => {
+      lastTouchY = null;
     };
 
     window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
 
     return () => {
       mounted = false;
+      if (speedResetTimer) {
+        window.clearTimeout(speedResetTimer);
+      }
       cancelAnimationFrame(raf);
       window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, [hasStarted]);
 

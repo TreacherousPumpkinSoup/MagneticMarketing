@@ -25,6 +25,7 @@ const frameSources = [
 ] as const;
 const preloadSources = [typewriterBack, typewriterFrontDefault, ...frameSources] as const;
 const STEP_WHEEL_THRESHOLD = 120;
+const STEP_TOUCH_THRESHOLD = 44;
 
 type TypewriterHeroProps = {
   onComplete?: () => void;
@@ -69,6 +70,8 @@ export default function TypewriterHero({ onComplete }: TypewriterHeroProps) {
     }
 
     let wheelAccumulated = 0;
+    let touchAccumulated = 0;
+    let lastTouchY: number | null = null;
 
     // Keep hero gated until the type sequence reaches its final frame.
     const previousOverflow = document.body.style.overflow;
@@ -110,13 +113,51 @@ export default function TypewriterHero({ onComplete }: TypewriterHeroProps) {
       progressTyping();
     };
 
+    const onTouchStart = (event: TouchEvent) => {
+      if (!event.touches.length) return;
+      lastTouchY = event.touches[0].clientY;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (!event.touches.length) return;
+      const currentY = event.touches[0].clientY;
+      if (lastTouchY === null) {
+        lastTouchY = currentY;
+        return;
+      }
+
+      const delta = lastTouchY - currentY;
+      lastTouchY = currentY;
+
+      // While hero is gated, capture touch scrolling and convert it to type steps.
+      event.preventDefault();
+      if (delta <= 0) return;
+
+      touchAccumulated += delta;
+      if (touchAccumulated >= STEP_TOUCH_THRESHOLD) {
+        touchAccumulated = 0;
+        progressTyping();
+      }
+    };
+
+    const onTouchEnd = () => {
+      lastTouchY = null;
+      touchAccumulated = 0;
+    };
+
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, [animationComplete, framesLoaded]);
 
