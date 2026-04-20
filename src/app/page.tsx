@@ -131,7 +131,7 @@ export default function Home() {
 
       <section id="packages" className="relative mx-auto mt-10 max-w-6xl rounded-2xl border-2 border-borderDeep bg-oxblood px-4 py-8 text-cream md:px-6 md:py-10">
         <motion.div
-          className="pointer-events-none absolute left-4 top-20 z-20 opacity-95 md:left-10 md:top-24"
+          className="pointer-events-none absolute right-4 top-20 z-20 opacity-95 md:right-10 md:top-24"
           animate={{ y: [0, 5, 0], rotate: [4, 7, 4] }}
           transition={{ repeat: Infinity, duration: 2.7 }}
         >
@@ -180,9 +180,16 @@ export default function Home() {
           Let&apos;s turn your brand into a cult favourite with strategic content, magnetic messaging, and daily visibility.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <a href="mailto:palaisleb@protonmail.com" className="sticker bg-beige">
+          <motion.a
+            href="mailto:palaisleb@protonmail.com"
+            className="sticker bg-beige"
+            animate={{ y: [0, -2, 0], scale: [1, 1.02, 1] }}
+            transition={{ repeat: Infinity, duration: 1.9, ease: "easeInOut" }}
+            whileHover={{ y: -3, scale: 1.04, rotate: -1 }}
+            whileTap={{ scale: 0.98 }}
+          >
             Let&apos;s Build Your Cult Brand
-          </a>
+          </motion.a>
         </div>
       </section>
     </main>
