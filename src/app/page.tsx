@@ -131,7 +131,7 @@ export default function Home() {
 
       <section id="packages" className="relative mx-auto mt-10 max-w-6xl rounded-2xl border-2 border-borderDeep bg-oxblood px-4 py-8 text-cream md:px-6 md:py-10">
         <motion.div
-          className="pointer-events-none absolute -top-10 right-4 z-20 opacity-95 md:right-10"
+          className="pointer-events-none absolute left-4 top-20 z-20 opacity-95 md:left-10 md:top-24"
           animate={{ y: [0, 5, 0], rotate: [4, 7, 4] }}
           transition={{ repeat: Infinity, duration: 2.7 }}
         >

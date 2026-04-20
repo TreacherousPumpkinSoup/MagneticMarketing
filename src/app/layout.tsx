@@ -9,7 +9,12 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: "Magnetic Marketing for Cult Brands",
-  description: "Y2K maximalist marketing services website."
+  description: "Y2K maximalist marketing services website.",
+  icons: {
+    icon: "/personality/bashi.png",
+    shortcut: "/personality/bashi.png",
+    apple: "/personality/bashi.png"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
