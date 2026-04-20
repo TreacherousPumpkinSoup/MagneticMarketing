@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
-const isActionsBuild = process.env.GITHUB_ACTIONS === "true";
+const isActionsBuild = process.env.GITHUB_ACTIONS === "true" && process.env.NODE_ENV === "production";
 const isUserOrOrgPage = repoName.endsWith(".github.io");
 const basePath = isActionsBuild && !isUserOrOrgPage ? `/${repoName}` : "";
 
