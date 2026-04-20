@@ -8,17 +8,20 @@ const frames = ["H", "E", "Y", "Y", "G", "I", "R", "L"] as const;
 
 const typedByStep = ["H", "HE", "HEY", "HEY ", "HEY G", "HEY GI", "HEY GIR", "HEY GIRL"] as const;
 
-const typewriterBack = "/typewriter/back.webp";
-const typewriterFrontDefault = "/typewriter/front-default.webp";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const withBasePath = (path: string) => `${basePath}${path}`;
+
+const typewriterBack = withBasePath("/typewriter/back.webp");
+const typewriterFrontDefault = withBasePath("/typewriter/front-default.webp");
 const frameSources = [
-  "/typewriter/front-h.webp",
-  "/typewriter/front-e.webp",
-  "/typewriter/front-y.webp",
-  "/typewriter/front-y.webp",
-  "/typewriter/front-g.webp",
-  "/typewriter/front-i.webp",
-  "/typewriter/front-r.webp",
-  "/typewriter/front-l.webp"
+  withBasePath("/typewriter/front-h.webp"),
+  withBasePath("/typewriter/front-e.webp"),
+  withBasePath("/typewriter/front-y.webp"),
+  withBasePath("/typewriter/front-y.webp"),
+  withBasePath("/typewriter/front-g.webp"),
+  withBasePath("/typewriter/front-i.webp"),
+  withBasePath("/typewriter/front-r.webp"),
+  withBasePath("/typewriter/front-l.webp")
 ] as const;
 const preloadSources = [typewriterBack, typewriterFrontDefault, ...frameSources] as const;
 const STEP_WHEEL_THRESHOLD = 120;

@@ -18,6 +18,8 @@ const timeline = {
 
 const totalDuration =
   timeline.omg + timeline.you + timeline.typed + timeline.typedPause + timeline.typedFadeOut + timeline.besties;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const withBasePath = (path: string) => `${basePath}${path}`;
 
 function phaseOpacity(phaseMs: number, totalMs: number, fadeIn = 380, fadeOut = 420): number {
   if (phaseMs < 0 || phaseMs > totalMs) return 0;
@@ -131,7 +133,7 @@ export default function PersonalityHook({ canStart }: PersonalityHookProps) {
           animate={{ y: [0, -6, 0], rotate: [-8, -11, -8] }}
           transition={{ repeat: Infinity, duration: 3.2 }}
         >
-          <Image src="/scrapbook/iloveu-clean.webp" alt="Scrapbook note sticker" width={180} height={70} />
+          <Image src={withBasePath("/scrapbook/iloveu-clean.webp")} alt="Scrapbook note sticker" width={180} height={70} />
         </motion.div>
         <div className="relative min-h-[22rem] w-full max-w-4xl">
           <p className="absolute inset-0 flex items-center justify-center text-6xl md:text-8xl" style={{ opacity: omgOpacity }}>
@@ -159,7 +161,7 @@ export default function PersonalityHook({ canStart }: PersonalityHookProps) {
       <section className="mx-auto mt-0 max-w-6xl px-2 pb-2">
         <div className="flex items-center gap-4 md:gap-6">
           <div className="relative h-24 w-24 rotate-[-4deg] overflow-hidden rounded-full border-4 border-borderDeep bg-cream shadow-y2k md:h-32 md:w-32">
-            <Image src="/personality/me.png" alt="Pali portrait" fill className="object-cover" sizes="128px" />
+            <Image src={withBasePath("/personality/me.png")} alt="Pali portrait" fill className="object-cover" sizes="128px" />
           </div>
           <h2 className="text-4xl md:text-6xl">Who, me?</h2>
         </div>
@@ -191,7 +193,7 @@ Yes, you can pat my dog.`}
           </div>
 
           <div className="pointer-events-none absolute -bottom-6 right-4 h-28 w-28 rotate-[6deg] overflow-hidden rounded-full border-4 border-cream bg-cream shadow-y2k md:-right-3 md:top-8 md:h-36 md:w-36">
-            <Image src="/personality/bashi.png" alt="Bashi portrait" fill className="object-cover" sizes="144px" />
+            <Image src={withBasePath("/personality/bashi.png")} alt="Bashi portrait" fill className="object-cover" sizes="144px" />
           </div>
         </div>
       </section>

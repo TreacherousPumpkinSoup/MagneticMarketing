@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import TypewriterHero from "@/components/TypewriterHero";
 import PersonalityHook from "@/components/PersonalityHook";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const withBasePath = (path: string) => `${basePath}${path}`;
 
 const packageCards = [
   {
@@ -97,14 +99,14 @@ export default function Home() {
           animate={{ y: [0, 7, 0], rotate: [6, 9, 6] }}
           transition={{ repeat: Infinity, duration: 2.9 }}
         >
-          <Image src="/scrapbook/dice-clean.webp" alt="Heart dice sticker" width={108} height={108} />
+          <Image src={withBasePath("/scrapbook/dice-clean.webp")} alt="Heart dice sticker" width={108} height={108} />
         </motion.div>
         <motion.div
           className="absolute left-4 top-[250vh] opacity-95 md:left-12"
           animate={{ y: [0, -8, 0], rotate: [-5, -8, -5] }}
           transition={{ repeat: Infinity, duration: 3.4 }}
         >
-          <Image src="/scrapbook/jam-heart-clean.webp" alt="Jam heart cookie sticker" width={110} height={110} />
+          <Image src={withBasePath("/scrapbook/jam-heart-clean.webp")} alt="Jam heart cookie sticker" width={110} height={110} />
         </motion.div>
       </div>
 
@@ -133,7 +135,7 @@ export default function Home() {
           animate={{ y: [0, 5, 0], rotate: [4, 7, 4] }}
           transition={{ repeat: Infinity, duration: 2.7 }}
         >
-          <Image src="/scrapbook/kiss-clean.webp" alt="Lip kiss sticker" width={126} height={126} />
+          <Image src={withBasePath("/scrapbook/kiss-clean.webp")} alt="Lip kiss sticker" width={126} height={126} />
         </motion.div>
         <h2 className="mb-5 text-center text-3xl md:text-5xl">WE GOT YOU.</h2>
         <div className="grid gap-6 lg:grid-cols-3">
