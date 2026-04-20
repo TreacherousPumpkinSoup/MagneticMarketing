@@ -101,13 +101,6 @@ export default function Home() {
         >
           <Image src={withBasePath("/scrapbook/dice-clean.webp")} alt="Heart dice sticker" width={108} height={108} />
         </motion.div>
-        <motion.div
-          className="absolute left-4 top-[250vh] opacity-95 md:left-12"
-          animate={{ y: [0, -8, 0], rotate: [-5, -8, -5] }}
-          transition={{ repeat: Infinity, duration: 3.4 }}
-        >
-          <Image src={withBasePath("/scrapbook/jam-heart-clean.webp")} alt="Jam heart cookie sticker" width={110} height={110} />
-        </motion.div>
       </div>
 
       <section id="hero" className="mx-auto mt-8 max-w-6xl space-y-5 y2k-panel p-6 stitched md:p-10">
@@ -174,12 +167,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="inquiry" className="mx-auto mt-12 max-w-6xl y2k-panel bg-[#ead5bf] p-7 text-center md:p-10">
-        <h2 className="text-3xl md:text-5xl">READY TO BUILD A MAGNETIC BRAND?</h2>
-        <p className="mx-auto mt-3 max-w-3xl">
+      <section id="inquiry" className="relative mx-auto mt-12 max-w-6xl y2k-panel bg-[#ead5bf] p-7 text-center md:p-10">
+        <motion.div
+          className="pointer-events-none absolute -bottom-10 right-4 z-0 opacity-95 md:right-10"
+          animate={{ y: [0, -8, 0], rotate: [-5, -8, -5] }}
+          transition={{ repeat: Infinity, duration: 3.4 }}
+        >
+          <Image src={withBasePath("/scrapbook/jam-heart-clean.webp")} alt="Jam heart cookie sticker" width={122} height={122} />
+        </motion.div>
+        <h2 className="relative z-10 text-3xl md:text-5xl">READY TO BUILD A MAGNETIC BRAND?</h2>
+        <p className="relative z-10 mx-auto mt-3 max-w-3xl">
           Let&apos;s turn your brand into a cult favourite with strategic content, magnetic messaging, and daily visibility.
         </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
+        <div className="relative z-10 mt-5 flex flex-wrap justify-center gap-3">
           <motion.a
             href="mailto:palaisleb@protonmail.com"
             className="sticker bg-beige"
