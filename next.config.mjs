@@ -1,0 +1,17 @@
+/** @type {import('next').NextConfig} */
+const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const isActionsBuild = process.env.GITHUB_ACTIONS === "true";
+const isUserOrOrgPage = repoName.endsWith(".github.io");
+const basePath = isActionsBuild && !isUserOrOrgPage ? `/${repoName}` : "";
+
+const nextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath,
+  assetPrefix: basePath || undefined,
+  images: {
+    unoptimized: true
+  }
+};
+
+export default nextConfig;
